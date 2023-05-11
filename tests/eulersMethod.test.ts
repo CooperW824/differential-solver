@@ -1,25 +1,71 @@
 import { DifferentialEquation } from '../src';
 
-var test1 = new DifferentialEquation(
-	(x, y) => {
-		return x + y;
-	},
-	0,
-	1,
-);
+test('Recursive Eulers Method on Diff Eq: x + y, initial condition y(0)=1, to y(10) in 10 steps', () => {
+	const steps = 10;
+	const initialIndependentVar = 0;
+	const initialDependentVar = 1;
+	const targetIndependentVariable = 10;
 
-// test('Recursive Eulers Method on Diff Eq: x + y, initial condition y(0)=1, to y(10) in 10 steps', () => {
-// 	expect(test1.eulersMethod(10, 10, { recursive: true })).toEqual(2037.0);
-// });
+	var testDifferential = new DifferentialEquation((x, y) => x + y, initialIndependentVar, initialDependentVar);
 
-test('Recursive Eulers Method on Diff Eq: x + y, initial condition y(0)=1, to y(10) in 30 steps', () => {
-	expect(test1.eulersMethod(10, 30, { recursive: true, rounding: 5 })).toEqual(14921.10846);
+	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
+	const test = {
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: true }),
+		expected: 2037.0,
+		error: 0,
+		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
+	};
+	test.error = test.actual - test.expected;
+
+	console.log('Test 1');
+	console.table(test);
+
+	expect(Math.abs(test.error)).toBeLessThan(test.acceptableError);
 });
 
+test('Recursive Eulers Method on Diff Eq: x + y, initial condition y(0)=1, to y(1) in 3 steps', () => {
+	const steps = 3;
+	const initialIndependentVar = 0;
+	const initialDependentVar = 1;
+	const targetIndependentVariable = 1;
 
-// test('Recursive Eulers Method on Diff Eq: x + y, initial condition y(0)=1, to y(25) in 50 steps', () => {
-// 	expect(test1.eulersMethod(25, 50, { recursive: true })).toEqual(1275242974.428);
-// });
+	var testDifferential = new DifferentialEquation((x, y) => x + y, initialIndependentVar, initialDependentVar);
 
+	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
+	const test = {
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: true }),
+		expected: 3.98765,
+		error: 0,
+		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
+	};
+	test.error = test.actual - test.expected;
 
+	console.log('Test 2');
+	console.table(test);
 
+	expect(Math.abs(test.error)).toBeLessThan(test.acceptableError);
+});
+
+test('Recursive Eulers Method on Diff Eq: x + y, initial condition y(0)=1, to y(25) in 50 steps', () => {
+	const steps = 50;
+	const initialIndependentVar = 0;
+	const initialDependentVar = 1;
+	const targetIndependentVariable = 25;
+
+	var testDifferential = new DifferentialEquation((x, y) => x + y, initialIndependentVar, initialDependentVar);
+
+	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
+	const test = {
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: true }),
+		expected: 1275242974.428,
+		error: 0,
+		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
+	};
+
+	test.error = test.actual - test.expected;
+
+	console.log('Test 3');
+	console.table(test);
+
+	expect(Math.abs(test.error)).toBeLessThan(test.acceptableError);
+});

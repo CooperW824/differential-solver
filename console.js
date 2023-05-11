@@ -1,0 +1,1 @@
+console.log("%cTest 2", "color:'Green';")

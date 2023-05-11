@@ -1,71 +1,75 @@
 import { EulersMethodOptions, IDifferentialEquation } from './types';
-import bigDecimal = require('js-big-decimal');
-
-/**
- * TODO: Convert to Fixed Point Arithmetic to reduce inaccuracies in floats
- * https://stackoverflow.com/questions/1458633/how-to-deal-with-floating-point-number-precision-in-javascript
- */
 
 export class DifferentialEquation implements IDifferentialEquation {
 	differential;
 	independentVarInitialCondition;
 	dependentVarInitialCondition;
+	rounding: number;
+	recursive: boolean;
+	acceptableIndependentVarError: number;
 
 	constructor(
 		differential: IDifferentialEquation['differential'],
 		independentVarInitialCondition: number,
 		dependentVarInitialCondition: number,
+		options?: EulersMethodOptions,
 	) {
 		this.differential = differential;
 		this.independentVarInitialCondition = independentVarInitialCondition;
 		this.dependentVarInitialCondition = dependentVarInitialCondition;
+		this.rounding = options?.rounding || 3;
+		this.recursive = options?.recursive || false;
+		this.acceptableIndependentVarError = options?.acceptableIndependentVarError || Math.pow(10, this.rounding * -1);
 	}
 
 	public eulersMethod(targetIndependentVariable: number, steps: number, options?: EulersMethodOptions): number {
-		const rounding = options?.rounding || 3;
-		const recursive = options?.recursive || false;
+		const rounding = options?.rounding || this.rounding;
+		const recursive = options?.recursive || this.recursive;
 
-		let bdTargetIndependentVariable = new bigDecimal(targetIndependentVariable)
-		let bdIndependentVarInitialCondition = new bigDecimal(this.independentVarInitialCondition)
-		let bdSteps  = new bigDecimal(steps)
+		let deltaX = (targetIndependentVariable - this.independentVarInitialCondition) / steps;
+		deltaX = this.roundToDecimals(deltaX, rounding);
 
-		let deltaX = bdTargetIndependentVariable.subtract(bdIndependentVarInitialCondition).divide(bdSteps, rounding);
+		console.log(deltaX);
 
 		if (recursive) {
-			console.log(deltaX.getValue())
-			let approximation = this.recursiveEulersMethod(bdTargetIndependentVariable, deltaX);
-			return Number(bigDecimal.round(approximation.getValue(), rounding));
+			let approximation = this.recursiveEulersMethod(targetIndependentVariable, deltaX, rounding);
+			return this.roundToDecimals(approximation, rounding);
 		}
 
-		let approximation = this.nonRecursiveEulersMethod(targetIndependentVariable, deltaX);
-		return Number(bigDecimal.round(approximation, rounding));
+		let approximation = this.nonRecursiveEulersMethod(targetIndependentVariable, deltaX, rounding);
+		return this.roundToDecimals(approximation, rounding);
 	}
 
-	private recursiveEulersMethod(independentVar: bigDecimal, deltaX: bigDecimal): bigDecimal {
-		if (independentVar.compareTo(new bigDecimal(this.independentVarInitialCondition)) <= 0) {
-			return new bigDecimal(this.dependentVarInitialCondition);
+	private recursiveEulersMethod(independentVar: number, deltaX: number, rounding: number): number {
+		if (independentVar - this.acceptableIndependentVarError <= this.independentVarInitialCondition) {
+			console.log(`x: ${independentVar}, y:${this.dependentVarInitialCondition}`);
+
+			return this.dependentVarInitialCondition;
 		}
-		let previousIndependentVar = independentVar.subtract(deltaX);
+		let previousIndependentVar = this.roundToDecimals(independentVar - deltaX, rounding);
 
-		let dependentVar = this.recursiveEulersMethod(previousIndependentVar, deltaX);
+		if (previousIndependentVar - this.acceptableIndependentVarError <= this.independentVarInitialCondition) {
+			console.log('reseting independent var');
+			previousIndependentVar = this.independentVarInitialCondition;
+		}
 
-		console.log(`x: ${previousIndependentVar.getValue()}, y:${dependentVar.getValue()}`);
+		let dependentVar = this.recursiveEulersMethod(previousIndependentVar, deltaX, rounding);
 
-		let deltaY = deltaX.multiply(
-			new bigDecimal(this.differential(Number(previousIndependentVar.getValue()), Number(dependentVar.getValue()))),
-		);
+		console.log(`x: ${previousIndependentVar}, y:${dependentVar}`);
 
-		return dependentVar.add(deltaY);
+		let deltaY = this.roundToDecimals(deltaX * this.differential(previousIndependentVar, dependentVar), rounding);
+
+		return dependentVar + deltaY;
 	}
 
-	private nonRecursiveEulersMethod(targetIndependentVariable: number, deltaX: bigDecimal): bigDecimal {
-		let calculatedDependentVariable = new bigDecimal(this.dependentVarInitialCondition);
-		let i = new bigDecimal(this.independentVarInitialCondition);
-		while (bigDecimal.compareTo(i, targetIndependentVariable)) {
-			let derivative = this.differential(Number(i.getValue()), Number(calculatedDependentVariable.getValue()));
-			let deltaY = bigDecimal.multiply(derivative, deltaX);
-			calculatedDependentVariable.setValue(bigDecimal.add(calculatedDependentVariable, deltaY));
-			i.setValue(bigDecimal.add(i, deltaX));
+	private nonRecursiveEulersMethod(targetIndependentVariable: number, deltaX: number, rounding: number): number {
+		let calculatedDependentVariable = this.dependentVarInitialCondition;
+		for (let i = this.independentVarInitialCondition; i < targetIndependentVariable; i = i + deltaX) {
+			let derivative = this.differential(i, calculatedDependentVariable);
+			let deltaY = derivative * deltaX;
+			calculatedDependentVariable = calculatedDependentVariable + deltaY;
+			calculatedDependentVariable = this.roundToDecimals(calculatedDependentVariable, rounding);
+			console.log(`x: ${i}, y:${calculatedDependentVariable}`);
 		}
 
 		return calculatedDependentVariable;

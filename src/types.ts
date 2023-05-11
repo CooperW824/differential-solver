@@ -9,4 +9,5 @@ export interface IDifferentialEquation {
 export interface EulersMethodOptions {
 	recursive?: boolean;
 	rounding?: number;
+	acceptableIndependentVarError? : number,
 }
