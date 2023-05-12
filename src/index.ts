@@ -27,13 +27,12 @@ export class DifferentialEquation implements IDifferentialEquation {
 		const recursive = options?.recursive || this.recursive;
 
 		let deltaX = (targetIndependentVariable - this.independentVarInitialCondition) / steps;
-		deltaX = this.roundToDecimals(deltaX, rounding);
 
 		console.log(deltaX);
 
 		if (recursive) {
-			let approximation = this.recursiveEulersMethod(targetIndependentVariable, deltaX, rounding);
-			return this.roundToDecimals(approximation, rounding);
+			 let approximation = this.recursiveEulersMethod(targetIndependentVariable, deltaX, rounding);
+			 return this.roundToDecimals(approximation, rounding);
 		}
 
 		let approximation = this.nonRecursiveEulersMethod(targetIndependentVariable, deltaX, rounding);
@@ -68,8 +67,7 @@ export class DifferentialEquation implements IDifferentialEquation {
 			let derivative = this.differential(i, calculatedDependentVariable);
 			let deltaY = derivative * deltaX;
 			calculatedDependentVariable = calculatedDependentVariable + deltaY;
-			calculatedDependentVariable = this.roundToDecimals(calculatedDependentVariable, rounding);
-			console.log(`x: ${i}, y:${calculatedDependentVariable}`);
+			calculatedDependentVariable = calculatedDependentVariable;
 		}
 
 		return calculatedDependentVariable;
