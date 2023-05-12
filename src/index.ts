@@ -1,6 +1,6 @@
 import { EulersMethodOptions, IDifferentialEquation } from './types';
 
-export class DifferentialEquation implements IDifferentialEquation {
+export default class DifferentialEquation implements IDifferentialEquation {
 	differential;
 	independentVarInitialCondition;
 	dependentVarInitialCondition;
@@ -28,8 +28,6 @@ export class DifferentialEquation implements IDifferentialEquation {
 
 		let deltaX = (targetIndependentVariable - this.independentVarInitialCondition) / steps;
 
-		console.log(deltaX);
-
 		if (recursive) {
 			 let approximation = this.recursiveEulersMethod(targetIndependentVariable, deltaX, rounding);
 			 return this.roundToDecimals(approximation, rounding);
@@ -45,18 +43,15 @@ export class DifferentialEquation implements IDifferentialEquation {
 
 			return this.dependentVarInitialCondition;
 		}
-		let previousIndependentVar = this.roundToDecimals(independentVar - deltaX, rounding);
+		let previousIndependentVar = independentVar - deltaX;
 
 		if (previousIndependentVar - this.acceptableIndependentVarError <= this.independentVarInitialCondition) {
-			console.log('reseting independent var');
 			previousIndependentVar = this.independentVarInitialCondition;
 		}
 
 		let dependentVar = this.recursiveEulersMethod(previousIndependentVar, deltaX, rounding);
 
-		console.log(`x: ${previousIndependentVar}, y:${dependentVar}`);
-
-		let deltaY = this.roundToDecimals(deltaX * this.differential(previousIndependentVar, dependentVar), rounding);
+		let deltaY = deltaX * this.differential(previousIndependentVar, dependentVar);
 
 		return dependentVar + deltaY;
 	}
