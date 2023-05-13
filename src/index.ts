@@ -32,7 +32,7 @@ export default class DifferentialEquation implements IDifferentialEquation {
 
 	/**
 	 * Calculates approximate solutions to the given differential equation using Euler's method
-	 * @param targetIndependentVariable The desired independent variable (x value) to solve for 
+	 * @param targetIndependentVariable The desired independent variable (x value) to solve for
 	 * @param steps The number of iterations to be performed in Eulers method, setting this higher improves accuracy at cost of speed
 	 * @param options (optional) An object that fits the Euler's method type
 	 * @returns {number} The solution from euler's method
@@ -47,8 +47,8 @@ export default class DifferentialEquation implements IDifferentialEquation {
 		let deltaX = (targetIndependentVariable - this.independentVarInitialCondition) / steps;
 
 		if (recursive) {
-			 let approximation = this.recursiveEulersMethod(targetIndependentVariable, deltaX);
-			 return this.roundToDecimals(approximation, rounding);
+			let approximation = this.recursiveEulersMethod(targetIndependentVariable, deltaX);
+			return this.roundToDecimals(approximation, rounding);
 		}
 
 		let approximation = this.nonRecursiveEulersMethod(targetIndependentVariable, deltaX);
@@ -70,8 +70,8 @@ export default class DifferentialEquation implements IDifferentialEquation {
 		// exiting the recursive loop
 		if (previousIndependentVar - this.acceptableIndependentVarError <= this.independentVarInitialCondition) {
 			previousIndependentVar = this.independentVarInitialCondition;
-			dependentVar = this.dependentVarInitialCondition
-		}else {
+			dependentVar = this.dependentVarInitialCondition;
+		} else {
 			// to get the previous dependentVar (y-value) for this step in eulers method
 			// we do the previous step
 			dependentVar = this.recursiveEulersMethod(previousIndependentVar, deltaX);
@@ -124,18 +124,17 @@ export default class DifferentialEquation implements IDifferentialEquation {
 	 * @param independentVar (optional) the x value to use in dy/dx, if no value is given, the initial condition is used
 	 * @param dependentVar (optional) the y value to use in dy/dx, if no value is given, the initial condition is used
 	 * @param rounding (optional) the desired number of decimal places, if no value is given, the number will not be rounded
-	 * @returns the value of dy/dx for the given inputs	
+	 * @returns the value of dy/dx for the given inputs
 	 */
 
 	public evaluateDifferential(independentVar?: number, dependentVar?: number, rounding?: number): number {
 		independentVar = independentVar || this.independentVarInitialCondition;
 		dependentVar = dependentVar || this.dependentVarInitialCondition;
-		let dydx = this.differential(independentVar, dependentVar)
-
+		let dydx = this.differential(independentVar, dependentVar);
 
 		// Returns the value of the function given at a point (x,y)
-		if(rounding) return this.roundToDecimals(dydx, rounding);
-		
+		if (rounding) return this.roundToDecimals(dydx, rounding);
+
 		return dydx;
 	}
 }

@@ -1,4 +1,4 @@
-import DifferentialEquation from '../src';
+import DifferentialEquation from '../src/index.js';
 
 test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(10) in 10 steps', () => {
 	const steps = 10;
@@ -10,7 +10,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(10) in 10 steps', () => {
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false }),
 		expected: 2037.0,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -33,7 +33,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(1) in 3 steps', () => {
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false }),
 		expected: 2.741,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -56,7 +56,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(25) in 50 steps', () => {
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false }),
 		expected: 1275242974.428,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -70,9 +70,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(25) in 50 steps', () => {
 	expect(Math.abs(test.error)).toBeLessThan(test.acceptableError);
 });
 
-
 // -- dy/dx = y*sin(x)
-
 
 test('Non-Recursive Diff Eq: y*Math.sin(x), y(5)=10 to y(10) in 10 steps', () => {
 	const steps = 10;
@@ -80,11 +78,15 @@ test('Non-Recursive Diff Eq: y*Math.sin(x), y(5)=10 to y(10) in 10 steps', () =>
 	const initialDependentVar = 10;
 	const targetIndependentVariable = 10;
 
-	var testDifferential = new DifferentialEquation((x, y) => y*Math.sin(x), initialIndependentVar, initialDependentVar);
+	var testDifferential = new DifferentialEquation(
+		(x, y) => y * Math.sin(x),
+		initialIndependentVar,
+		initialDependentVar,
+	);
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false }),
 		expected: 15.208,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -103,11 +105,15 @@ test('Non-Recursive Diff Eq: y*Math.sin(x), y(0)=1, to y(1) in 3 steps', () => {
 	const initialDependentVar = 1;
 	const targetIndependentVariable = 1;
 
-	var testDifferential = new DifferentialEquation((x, y) => y*Math.sin(x), initialIndependentVar, initialDependentVar);
+	var testDifferential = new DifferentialEquation(
+		(x, y) => y * Math.sin(x),
+		initialIndependentVar,
+		initialDependentVar,
+	);
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false }),
 		expected: 1.338,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -126,11 +132,15 @@ test('Non-Recursive Diff Eq: y*Math.sin(x), y(0)=1, to y(25) in 50 steps', () =>
 	const initialDependentVar = 1;
 	const targetIndependentVariable = 25;
 
-	var testDifferential = new DifferentialEquation((x, y) => y*Math.sin(x), initialIndependentVar, initialDependentVar);
+	var testDifferential = new DifferentialEquation(
+		(x, y) => y * Math.sin(x),
+		initialIndependentVar,
+		initialDependentVar,
+	);
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false }),
 		expected: 0.032,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -156,7 +166,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(10) in 10 steps, rounding: 7', 
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false, rounding: 7}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false, rounding: 7 }),
 		expected: 2037.0,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -179,7 +189,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(1) in 3 steps, rounding: 7', ()
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false, rounding: 7}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false, rounding: 7 }),
 		expected: 2.7407407,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -202,7 +212,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(25) in 50 steps, rounding: 7', 
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false, rounding: 7}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false, rounding: 7 }),
 		expected: 1275242974.4280992,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -216,9 +226,7 @@ test('Non-Recursive Diff Eq: x + y, y(0)=1, to y(25) in 50 steps, rounding: 7', 
 	expect(Math.abs(test.error)).toBeLessThan(test.acceptableError);
 });
 
-
 // -- dy/dx = y*sin(x)
-
 
 test('Non-Recursive Diff Eq: y*Math.sin(x), y(5)=10 to y(10) in 10 steps, rounding: 7', () => {
 	const steps = 10;
@@ -226,11 +234,15 @@ test('Non-Recursive Diff Eq: y*Math.sin(x), y(5)=10 to y(10) in 10 steps, roundi
 	const initialDependentVar = 10;
 	const targetIndependentVariable = 10;
 
-	var testDifferential = new DifferentialEquation((x, y) => y*Math.sin(x), initialIndependentVar, initialDependentVar);
+	var testDifferential = new DifferentialEquation(
+		(x, y) => y * Math.sin(x),
+		initialIndependentVar,
+		initialDependentVar,
+	);
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false, rounding: 7}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false, rounding: 7 }),
 		expected: 15.2083415,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
@@ -249,12 +261,16 @@ test('Non-Recursive Diff Eq: y*Math.sin(x), y(0)=1, to y(1) in 3 steps, rounding
 	const initialDependentVar = 1;
 	const targetIndependentVariable = 1;
 
-	var testDifferential = new DifferentialEquation((x, y) => y*Math.sin(x), initialIndependentVar, initialDependentVar);
+	var testDifferential = new DifferentialEquation(
+		(x, y) => y * Math.sin(x),
+		initialIndependentVar,
+		initialDependentVar,
+	);
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false, rounding: 7}),
-		expected: 1.3376690,
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false, rounding: 7 }),
+		expected: 1.337669,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
 	};
@@ -272,11 +288,15 @@ test('Non-Recursive Diff Eq: y*Math.sin(x), y(0)=1, to y(25) in 50 steps, roundi
 	const initialDependentVar = 1;
 	const targetIndependentVariable = 25;
 
-	var testDifferential = new DifferentialEquation((x, y) => y*Math.sin(x), initialIndependentVar, initialDependentVar);
+	var testDifferential = new DifferentialEquation(
+		(x, y) => y * Math.sin(x),
+		initialIndependentVar,
+		initialDependentVar,
+	);
 
 	const stepSize = (targetIndependentVariable - initialIndependentVar) / steps;
 	const test = {
-		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, {recursive: false, rounding: 7}),
+		actual: testDifferential.eulersMethod(targetIndependentVariable, steps, { recursive: false, rounding: 7 }),
 		expected: 0.0320422,
 		error: 0,
 		acceptableError: Number.EPSILON / Math.sqrt(stepSize),
