@@ -2,7 +2,7 @@
     "compilerOptions": {
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "src",
+        "baseUrl": "ts",
         "declaration": true,
         "esModuleInterop": true,
         "inlineSourceMap": false,
@@ -13,12 +13,12 @@
         "noFallthroughCasesInSwitch": true,
         "pretty": true,
         "resolveJsonModule": true,
-        "rootDir": "src",
+        "rootDir": "ts",
         "skipLibCheck": true,
         "strict": true,
         "traceResolution": false
     },
     "compileOnSave": false,
     "exclude": ["node_modules", "dist", "tests/*"],
-    "include": ["src"]
+    "include": ["ts"]
 }

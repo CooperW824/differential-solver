@@ -2,6 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DifferentialEquation = void 0;
 class DifferentialEquation {
+    differential;
+    independentVarInitialCondition;
+    dependentVarInitialCondition;
+    rounding;
+    recursive;
+    acceptableIndependentVarError;
     /**
      * Creates a new differential equation solver instance
      * @param differential The differential equation represented as a function. Ex (x, y) => x + y
@@ -13,9 +19,9 @@ class DifferentialEquation {
         this.differential = differential;
         this.independentVarInitialCondition = independentVarInitialCondition;
         this.dependentVarInitialCondition = dependentVarInitialCondition;
-        this.rounding = (options === null || options === void 0 ? void 0 : options.rounding) || 3;
-        this.recursive = (options === null || options === void 0 ? void 0 : options.recursive) || false;
-        this.acceptableIndependentVarError = (options === null || options === void 0 ? void 0 : options.acceptableIndependentVarError) || Math.pow(10, this.rounding * -1);
+        this.rounding = options?.rounding || 3;
+        this.recursive = options?.recursive || false;
+        this.acceptableIndependentVarError = options?.acceptableIndependentVarError || Math.pow(10, this.rounding * -1);
     }
     /**
      * Calculates approximate solutions to the given differential equation using Euler's method
@@ -25,8 +31,8 @@ class DifferentialEquation {
      * @returns {number} The solution from euler's method
      */
     eulersMethod(targetIndependentVariable, steps, options) {
-        const rounding = (options === null || options === void 0 ? void 0 : options.rounding) || this.rounding;
-        const recursive = (options === null || options === void 0 ? void 0 : options.recursive) || this.recursive;
+        const rounding = options?.rounding || this.rounding;
+        const recursive = options?.recursive || this.recursive;
         // the change in X is calculated by taking the overall difference between target and initial
         // then dividing that by the number of steps
         let deltaX = (targetIndependentVariable - this.independentVarInitialCondition) / steps;
