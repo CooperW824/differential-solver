@@ -1,6 +1,6 @@
 {
 	"name": "differential-solver",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Euler's Method Differential Equations Solver",
 	"scripts": {
 		"test": "jest",
