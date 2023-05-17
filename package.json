@@ -4,8 +4,7 @@
 	"description": "Euler's Method Differential Equations Solver",
 	"scripts": {
 		"test": "jest",
-		"start": "tsc | node build/index.js",
-		"build": "rmdir /s /q dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && .\\fixup && xcopy ts dist/ts"
+		"build": "rmdir /s /q dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && .\\fixup && xcopy ts dist\\ts\\"
 	},
 	"keywords": [
 		"Calculus",
