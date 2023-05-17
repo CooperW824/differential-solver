@@ -1,4 +1,5 @@
-import DifferentialEquation from '../src';
+import {DifferentialEquation} from '../ts';
+
 
 test('Recursive Diff Eq: x + y, y(0)=1, to y(10) in 10 steps', () => {
 	const steps = 10;

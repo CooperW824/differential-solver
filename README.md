@@ -221,6 +221,14 @@ console.log(derivative)
 // 5.85959 rounds to 5.86
 ```
 
+## Building From Source
+
+A build is packaged with the code in the dist folder, but to build the program on windows you can just run
+
+        npm run build
+
+for other operating systems you may need to adjust the fixup script and copy command.
+
 ## Contributing 
 
 This is a very small library, but acts as my proving ground for building future JS / TS modules. I have a few ideas for expanding this, but if you have any issues or ideas please open a GitHub issue.

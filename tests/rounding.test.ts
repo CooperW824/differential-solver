@@ -1,4 +1,5 @@
-import  DifferentialEquation  from '../src';
+import {DifferentialEquation} from '../ts';
+
 
 var testDifferential = new DifferentialEquation((x,y) => x + y, 0, 1)
 
