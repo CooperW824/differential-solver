@@ -1,4 +1,4 @@
-export default class DifferentialEquation {
+export class DifferentialEquation {
     differential;
     independentVarInitialCondition;
     dependentVarInitialCondition;

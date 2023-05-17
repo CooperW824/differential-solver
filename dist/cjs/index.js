@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DifferentialEquation = void 0;
 class DifferentialEquation {
     /**
      * Creates a new differential equation solver instance
@@ -109,4 +110,4 @@ class DifferentialEquation {
         return dydx;
     }
 }
-exports.default = DifferentialEquation;
+exports.DifferentialEquation = DifferentialEquation;

@@ -1,5 +1,5 @@
 import { EulersMethodOptions, IDifferentialEquation } from './types';
-export default class DifferentialEquation implements IDifferentialEquation {
+export declare class DifferentialEquation implements IDifferentialEquation {
     differential: (independentVar: number, dependentVar: number) => number;
     independentVarInitialCondition: number;
     dependentVarInitialCondition: number;
