@@ -1,6 +1,6 @@
 import { EulersMethodOptions, IDifferentialEquation } from './types';
 export declare class DifferentialEquation implements IDifferentialEquation {
-    differential: (independentVar: number, dependentVar: number) => number;
+    differential: (x: number, y: number) => number;
     independentVarInitialCondition: number;
     dependentVarInitialCondition: number;
     rounding: number;
@@ -13,7 +13,7 @@ export declare class DifferentialEquation implements IDifferentialEquation {
      * @param dependentVarInitialCondition The initial condition for the dependent variable (y value)
      * @param options (optional) an object that fits EulersMethodOptions type
      */
-    constructor(differential: IDifferentialEquation['differential'], independentVarInitialCondition: number, dependentVarInitialCondition: number, options?: EulersMethodOptions);
+    constructor(differential: (x: number, y: number) => number, independentVarInitialCondition: number, dependentVarInitialCondition: number, options?: EulersMethodOptions);
     /**
      * Calculates approximate solutions to the given differential equation using Euler's method
      * @param targetIndependentVariable The desired independent variable (x value) to solve for

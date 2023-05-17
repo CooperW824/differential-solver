@@ -17,7 +17,7 @@ export class DifferentialEquation implements IDifferentialEquation {
 	 */
 
 	constructor(
-		differential: IDifferentialEquation['differential'],
+		differential: (x: number, y:number) => number,
 		independentVarInitialCondition: number,
 		dependentVarInitialCondition: number,
 		options?: EulersMethodOptions,
